@@ -5,4 +5,4 @@ let rollback = 1;
 const fullPrice = screenPrice * 1.2;
 let adaptive = "Не хочу писать адаптив =)";
 console.log( adaptive );
-alert ( title );
+alert( title );
