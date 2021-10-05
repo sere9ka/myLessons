@@ -7,16 +7,8 @@ let screens = prompt('Какие типы экранов нужно разраб
 console.log(screens);
 let screenPrice = prompt('Сколько будет стоить данная работа?');
 console.log(screenPrice);
-let adaptive = prompt('Нужен ли адаптив на сайте?', "Да / Нет");
-
-if (adaptive == 'yes' || adaptive == 'да' || adaptive == 'нужен') {
-    adaptive = true;
-    console.log(adaptive);
-} else {
-    adaptive = false;
-    console.log(adaptive);
-}
-
+let adaptive = confirm('Нужен ли адаптив на сайте?');
+console.log(adaptive);
 let service1 = prompt('Какой тип дополнительной услуги нужен?');
 console.log(service1);
 let servicePrice1 = prompt('Сколько это будет стоить?');
@@ -38,6 +30,6 @@ let servicePercentPrice = Math.ceil(+fullPrice - +rollbackPrice);
 console.log(servicePercentPrice);
 
 if (fullPrice >= 30000) console.log('Даём скидку в 10%');
-else if (fullPrice < 30000 && fullPrice <= 15000) console.log('Даём скидку в 5%');
-else if (fullPrice < 15000 && fullPrice <= 0) console.log('Скидка не предусмотрена');
+else if (fullPrice < 30000 && fullPrice >= 15000) console.log('Даём скидку в 5%');
+else if (fullPrice < 15000 && fullPrice >= 0) console.log('Скидка не предусмотрена');
 else console.log('Что то пошло не так');
