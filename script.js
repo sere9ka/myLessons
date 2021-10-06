@@ -1,32 +1,37 @@
 'use strict';
 
-let title = prompt('Как называется Ваш проект?', 'Калькулятор вёрстки');
-let screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные');
-let screenPrice = +prompt('Сколько будет стоить данная работа?', '26000');
-let adaptive = confirm('Нужен ли адаптив на сайте?');
-
+let title;
+let screens;
+let screenPrice;
+let adaptive;
 let rollback = 13;
-let screensStr = screens.toLowerCase()
-
 let servicePercentPrice;
 let allServicePrices;
 let fullPrice;
+let service1;
+let service2;
 
-let service1 = prompt('Какой тип дополнительной услуги нужен?', 'Метрика');
-let servicePrice1 = +prompt('Сколько это будет стоить?', '2030');
-let service2 = prompt('Какой тип дополнительной услуги нужен?', 'Хостинг');
-let servicePrice2 = +prompt('Сколько это будет стоить?', '1500');
 //объявления функций
-const showTypeOf = function (variable) {
-    console.log(variable, typeof variable);
+
+const isNumber = function (num) {
+    return !isNaN(parseFloat(num)) && isFinite(num);
 }
 
-const getScreenPrice = function () {
+const asking = function () {
+    title = prompt('Как называется Ваш проект?', 'Калькулятор вёрстки');
+    screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные');
+
     do {
-        screenPrice += +prompt('Сколько будет стоить данная работа?', '26000');
-    } while (condition) {
-        screenPrice += +prompt('Сколько будет стоить данная работа?', '26000');
+        screenPrice = prompt('Сколько будет стоить данная работа?');
+    } while (!isNumber(screenPrice)) {
+
     }
+
+    adaptive = confirm('Нужен ли адаптив на сайте?');
+}
+
+const showTypeOf = function (variable) {
+    console.log(variable, typeof variable);
 }
 
 const getRollbackMessage = function (price) {
@@ -41,7 +46,16 @@ const getRollbackMessage = function (price) {
 }
 
 const getAllServicePrices = function () {
-    return servicePrice1 + servicePrice2;
+    let sum = 0;
+    for (let i = 0; i < 2; i++) {
+        if (i === 0) {
+            service1 = prompt('Какой тип дополнительной услуги нужен?', 'Метрика');
+        } else if (i === 1) {
+            service2 = prompt('Какой тип дополнительной услуги нужен?', 'Формы');
+        }
+        sum += +prompt('Сколько это будет стоить?', '2030');
+    }
+    return sum;
 }
 
 function getFullPrice() {
@@ -62,20 +76,24 @@ const getTitle = function () {
 }
 
 const getServicePercentPrices = function (full, rollback) {
-    servicePercentPrice = Math.ceil(full - (full * (rollback / 100)));
-    return servicePercentPrice;
+    return Math.ceil(full - (full * (rollback / 100)));
+
 }
 
 //вызов функций
+
+asking()
+allServicePrices = getAllServicePrices();
+fullPrice = getFullPrice();
+servicePercentPrice = getServicePercentPrices();
+title = getTitle();
+
 showTypeOf(title);
 showTypeOf(screenPrice);
 showTypeOf(adaptive);
 
-allServicePrices = getAllServicePrices();
-fullPrice = getFullPrice();
-title = getTitle();
-
 //мусор и логи
-console.log(screensStr.split());
+console.log("allServicePrices", allServicePrices);
+console.log(screens.toLowerCase().split());
 console.log(getRollbackMessage(fullPrice));
 console.log(getServicePercentPrices(fullPrice, rollback));
