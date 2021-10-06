@@ -4,10 +4,7 @@ let title = prompt('Как называется Ваш проект?', 'Каль
 let screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные');
 let screenPrice = +prompt('Сколько будет стоить данная работа?', '26000');
 let adaptive = confirm('Нужен ли адаптив на сайте?');
-let service1 = prompt('Какой тип дополнительной услуги нужен?', 'Метрика');
-let servicePrice1 = +prompt('Сколько это будет стоить?', '2030');
-let service2 = prompt('Какой тип дополнительной услуги нужен?', 'Хостинг');
-let servicePrice2 = +prompt('Сколько это будет стоить?', '1500');
+
 let rollback = 13;
 let screensStr = screens.toLowerCase()
 
@@ -15,9 +12,21 @@ let servicePercentPrice;
 let allServicePrices;
 let fullPrice;
 
+let service1 = prompt('Какой тип дополнительной услуги нужен?', 'Метрика');
+let servicePrice1 = +prompt('Сколько это будет стоить?', '2030');
+let service2 = prompt('Какой тип дополнительной услуги нужен?', 'Хостинг');
+let servicePrice2 = +prompt('Сколько это будет стоить?', '1500');
 //объявления функций
 const showTypeOf = function (variable) {
     console.log(variable, typeof variable);
+}
+
+const getScreenPrice = function () {
+    do {
+        screenPrice += +prompt('Сколько будет стоить данная работа?', '26000');
+    } while (condition) {
+        screenPrice += +prompt('Сколько будет стоить данная работа?', '26000');
+    }
 }
 
 const getRollbackMessage = function (price) {
@@ -31,15 +40,15 @@ const getRollbackMessage = function (price) {
         return 'Что то пошло не так';
 }
 
-const getAllServicePrices = function (price1, price2) {
-    allServicePrices = price1 + price2;
+const getAllServicePrices = function () {
+    return servicePrice1 + servicePrice2;
 }
 
-function getFullPrice(screenPrice, allServicePrices) {
-    fullPrice = screenPrice + allServicePrices;
+function getFullPrice() {
+    return screenPrice + allServicePrices;
 }
 
-const getTitle = function (title) {
+const getTitle = function () {
     let titleArr = title.split(' ');
     titleArr = titleArr.filter(function (str) {
         return /\S/.test(str);
@@ -61,9 +70,10 @@ const getServicePercentPrices = function (full, rollback) {
 showTypeOf(title);
 showTypeOf(screenPrice);
 showTypeOf(adaptive);
-getAllServicePrices(servicePrice1, servicePrice2);
-getFullPrice(screenPrice, allServicePrices);
-getTitle(title);
+
+allServicePrices = getAllServicePrices();
+fullPrice = getFullPrice();
+title = getTitle();
 
 //мусор и логи
 console.log(screensStr.split());
