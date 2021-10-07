@@ -10,6 +10,7 @@ let allServicePrices;
 let fullPrice;
 let service1;
 let service2;
+let servicePrice;
 
 //объявления функций
 
@@ -50,16 +51,26 @@ const getAllServicePrices = function () {
     for (let i = 0; i < 2; i++) {
         if (i === 0) {
             service1 = prompt('Какой тип дополнительной услуги нужен?', 'Метрика');
+            do {
+                servicePrice = prompt('Сколько это будет стоить?', '2030');
+            } while (!isNumber(servicePrice)) {
+                
+            }
         } else if (i === 1) {
             service2 = prompt('Какой тип дополнительной услуги нужен?', 'Формы');
+            do {
+                servicePrice = prompt('Сколько это будет стоить?', '2030');
+            } while (!isNumber(servicePrice)) {
+
+            }
         }
-        sum += +prompt('Сколько это будет стоить?', '2030');
+        sum += +servicePrice
     }
     return sum;
 }
 
 function getFullPrice() {
-    return screenPrice + allServicePrices;
+    return +screenPrice + +allServicePrices;
 }
 
 const getTitle = function () {
@@ -75,9 +86,8 @@ const getTitle = function () {
     return title;
 }
 
-const getServicePercentPrices = function (full, rollback) {
-    return Math.ceil(full - (full * (rollback / 100)));
-
+const getServicePercentPrices = function () {
+    return Math.ceil(fullPrice - (fullPrice * (rollback / 100)));
 }
 
 //вызов функций
@@ -91,9 +101,12 @@ title = getTitle();
 showTypeOf(title);
 showTypeOf(screenPrice);
 showTypeOf(adaptive);
+showTypeOf(fullPrice);
+showTypeOf(servicePercentPrice)
+
 
 //мусор и логи
 console.log("allServicePrices", allServicePrices);
 console.log(screens.toLowerCase().split());
 console.log(getRollbackMessage(fullPrice));
-console.log(getServicePercentPrices(fullPrice, rollback));
+console.log(getServicePercentPrices());
