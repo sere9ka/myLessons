@@ -15,7 +15,7 @@ let servicePrice;
 //объявления функций
 
 const isNumber = function (num) {
-    return !isNaN(parseFloat(num)) && isFinite(num);
+        return !isNaN(parseFloat(num)) && isFinite(num);
 }
 
 const asking = function () {
@@ -24,6 +24,10 @@ const asking = function () {
 
     do {
         screenPrice = prompt('Сколько будет стоить данная работа?');
+        screenPrice = screenPrice.split(' ').filter(function (str) {
+            return /\S/.test(str);
+        });
+        screenPrice = +screenPrice.join('')
     } while (!isNumber(screenPrice)) {
 
     }
@@ -53,6 +57,10 @@ const getAllServicePrices = function () {
             service1 = prompt('Какой тип дополнительной услуги нужен?', 'Метрика');
             do {
                 servicePrice = prompt('Сколько это будет стоить?', '2030');
+                servicePrice = servicePrice.split(' ').filter(function (str) {
+                    return /\S/.test(str);
+                });
+                servicePrice = +servicePrice.join('')
             } while (!isNumber(servicePrice)) {
                 
             }
@@ -60,6 +68,10 @@ const getAllServicePrices = function () {
             service2 = prompt('Какой тип дополнительной услуги нужен?', 'Формы');
             do {
                 servicePrice = prompt('Сколько это будет стоить?', '2030');
+                servicePrice = servicePrice.split(' ').filter(function (str) {
+                    return /\S/.test(str);
+                });
+                servicePrice = +servicePrice.join('')
             } while (!isNumber(servicePrice)) {
 
             }
