@@ -21,7 +21,7 @@ const appData = {
     asking: function () {
         appData.title = prompt('Как называется Ваш проект?', 'Калькулятор вёрстки');
         appData.screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные');
-    
+
         do {
             appData.screenPrice = prompt('Сколько будет стоить данная работа?');
             appData.screenPrice = appData.screenPrice.split(' ').filter(function (str) {
@@ -59,7 +59,7 @@ const appData = {
                     });
                     servicePrice = +servicePrice.join('')
                 } while (!appData.isNumber(servicePrice)) {
-                    
+
                 }
             } else if (i === 1) {
                 appData.service2 = prompt('Какой тип дополнительной услуги нужен?', 'Формы');
@@ -70,14 +70,14 @@ const appData = {
                     });
                     servicePrice = +servicePrice.join('')
                 } while (!appData.isNumber(servicePrice)) {
-    
+
                 }
             }
             appData.allServicePrices += +servicePrice
         }
         return appData.allServicePrices;
-    }, 
-    getFullPrice: function() {
+    },
+    getFullPrice: function () {
         appData.fullPrice = +appData.screenPrice + +appData.allServicePrices;
         return appData.fullPrice;
     },
@@ -99,20 +99,10 @@ const appData = {
     },
     logger: function () {
         for (const key in appData) {
-           console.log('Ключ: ' + key + ' ' + 'Значение: ' + appData[key]); 
+            console.log('Ключ: ' + key + ' ' + 'Значение: ' + appData[key]);
         }
-        // console.log('title: ' + appData.title);
-        // console.log('screens: ' + appData.screens);
-        // console.log('adaptive: ' + appData.adaptive);
-        // console.log('service1: ' + appData.service1);
-        // console.log('service2: ' + appData.service2);
-        // console.log('sum service: ' + appData.service2);
-        // console.log('screenPrice: ' + appData.screenPrice);
-        // console.log('fullPrice: ' + appData.fullPrice);
-        // console.log('servicePercentPrice: ' + appData.servicePercentPrice);
-        // console.log('allServicePrices: ' + appData.allServicePrices);        
     }
-} 
+}
 
 //объявления функций
 
