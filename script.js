@@ -21,7 +21,7 @@ const appData = {
     asking: function () {
         appData.title = prompt('Как называется Ваш проект?', 'Калькулятор вёрстки');
         appData.screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные');
-
+    
         do {
             appData.screenPrice = prompt('Сколько будет стоить данная работа?');
             appData.screenPrice = appData.screenPrice.split(' ').filter(function (str) {
@@ -59,7 +59,7 @@ const appData = {
                     });
                     servicePrice = +servicePrice.join('')
                 } while (!appData.isNumber(servicePrice)) {
-
+                    
                 }
             } else if (i === 1) {
                 appData.service2 = prompt('Какой тип дополнительной услуги нужен?', 'Формы');
@@ -70,14 +70,14 @@ const appData = {
                     });
                     servicePrice = +servicePrice.join('')
                 } while (!appData.isNumber(servicePrice)) {
-
+    
                 }
             }
             appData.allServicePrices += +servicePrice
         }
         return appData.allServicePrices;
-    },
-    getFullPrice: function () {
+    }, 
+    getFullPrice: function() {
         appData.fullPrice = +appData.screenPrice + +appData.allServicePrices;
         return appData.fullPrice;
     },
@@ -99,45 +99,27 @@ const appData = {
     },
     logger: function () {
         for (const key in appData) {
-            console.log('Ключ: ' + key + ' ' + 'Значение: ' + appData[key]);
+           console.log('Ключ: ' + key + ' ' + 'Значение: ' + appData[key]); 
         }
+        // console.log('title: ' + appData.title);
+        // console.log('screens: ' + appData.screens);
+        // console.log('adaptive: ' + appData.adaptive);
+        // console.log('service1: ' + appData.service1);
+        // console.log('service2: ' + appData.service2);
+        // console.log('sum service: ' + appData.service2);
+        // console.log('screenPrice: ' + appData.screenPrice);
+        // console.log('fullPrice: ' + appData.fullPrice);
+        // console.log('servicePercentPrice: ' + appData.servicePercentPrice);
+        // console.log('allServicePrices: ' + appData.allServicePrices);        
     }
-}
+} 
 
-function getFullPrice() {
-    return +screenPrice + +allServicePrices;
-}
+//объявления функций
 
-const getTitle = function () {
-    let titleArr = title.split(' ');
-    titleArr = titleArr.filter(function (str) {
-        return /\S/.test(str);
-    });
-    title = titleArr.join(' ').toLowerCase();
-    titleArr = title.split('');
-    let first = titleArr[0].toUpperCase();
-    titleArr.splice(0, 1)
-    title = [first, ...titleArr].join("");
-    return title;
-}
-
-const getServicePercentPrices = function () {
-    return Math.ceil(fullPrice - (fullPrice * (rollback / 100)));
-}
 
 //вызов функций
 
 appData.start()
 
-showTypeOf(title);
-showTypeOf(screenPrice);
-showTypeOf(adaptive);
-showTypeOf(fullPrice);
-showTypeOf(servicePercentPrice)
-
 
 //мусор и логи
-console.log("allServicePrices", allServicePrices);
-console.log(screens.toLowerCase().split());
-console.log(getRollbackMessage(fullPrice));
-console.log(getServicePercentPrices());
