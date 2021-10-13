@@ -13,6 +13,11 @@ const appData = {
     isNumber: function (num) {
         return !isNaN(parseFloat(num)) && isFinite(num);
     },
+
+    isString: function isString(val) {
+        return (typeof val === "string" || val instanceof String);
+    },
+
     start: function () {
         appData.asking();
         appData.addPrices();
@@ -24,7 +29,14 @@ const appData = {
         appData.logger();
     },
     asking: function () {
-        appData.title = prompt('Как называется Ваш проект?', 'Калькулятор вёрстки');
+
+
+
+        do {
+            appData.title = prompt('Как называется Ваш проект?', 'Калькулятор вёрстки');
+            console.log(typeof appData.title);
+        } while (appData.isString(appData.title))
+
 
         for (let i = 0; i < 2; i++) {
             let name = prompt('Какие типы экранов нужно разработать?');
