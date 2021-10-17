@@ -4,60 +4,19 @@
 const title = document.getElementsByTagName('h1')[0];
 const buttonCalc = document.getElementsByClassName('handler_btn')[0];
 const buttonRes = document.getElementsByClassName('handler_btn')[1];
-const buttonSum = document.querySelector('.screen-btn');
-const otherItems = document.querySelectorAll('.other-items');
+const buttonPlus = document.querySelector('.screen-btn');
+const otherItemsPer = document.querySelectorAll('.other-items.percent');
+const otherItemsNum = document.querySelectorAll('.other-items.number');
 const inputRange = document.querySelector(".rollback  input[type=range]");
 const spanRange = document.querySelector(".rollback  span.range-value");
-const inputsTotal = document.getElementsByClassName('total-input');
+
+const total = document.getElementsByClassName('total-input')[0];
+const totalCount = document.getElementsByClassName('total-input')[1];
+const totalCountOther = document.getElementsByClassName('total-input')[2];
+const totalFullCount = document.getElementsByClassName('total-input')[3];
+const totalCountRollback = document.getElementsByClassName('total-input')[4];
+
 let screenBlocks = document.querySelectorAll('.screen');
-
-let otherItemPer;
-let otherItemNum;
-let inputTotal;
-
-
-let getInputTotal = function () {
-    for (let i = 0; i < inputsTotal.length; i++) {
-        inputTotal = inputsTotal[i];
-        console.log(inputTotal);
-    }
-}
-
-function getOtherItem() {
-    for (let i = 0; i < otherItems.length; i++) {
-        if (otherItems[i].classList.contains('percent')) {
-            otherItemPer = otherItems[i]
-            console.log(otherItemPer.textContent); 
-        } else if (otherItems[i].classList.contains('number')) {
-            otherItemNum = otherItems[i]
-            console.log(otherItemNum.textContent + 'это другое');
-        }
-    }
-};
-
-function consolLogger() {
-    console.log(screenBlocks);
-    console.log(inputRange);
-    console.log(spanRange);
-    console.log(title.textContent);
-    console.log(buttonCalc.textContent);
-    console.log(buttonRes.textContent);
-};
-
-
-getOtherItem();
-getInputTotal();
-consolLogger();
-
-
-
-
-//логи новые
-
-// console.dir(otherItems);
-// console.dir(otherItemsPer);
-// console.dir(otherItemsNum);
-
 
 //старая часть работы
 const appData = {
@@ -95,7 +54,7 @@ const appData = {
 
         for (let i = 0; i < 2; i++) {
             let price = 0;
-            let name; 
+            let name;
             do {
                 name = prompt('Какие типы экранов нужно разработать?');
             } while (appData.isNumber(name));
@@ -141,7 +100,7 @@ const appData = {
         //     appData.screenPrice += +screen.price;
         // }
 
-        appData.screenPrice = appData.screens.reduce(function(sum, screen) {
+        appData.screenPrice = appData.screens.reduce(function (sum, screen) {
             return sum + screen.price
         }, 0);
 
