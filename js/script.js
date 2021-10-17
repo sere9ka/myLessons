@@ -3,7 +3,7 @@
 
 const title = document.getElementsByTagName('h1')[0];
 const buttonCalc = document.getElementsByClassName('handler_btn')[0];
-const buttonRes = document.getElementsByClassName('handler_btn')[1];
+const buttonReset = document.getElementsByClassName('handler_btn')[1];
 const buttonPlus = document.querySelector('.screen-btn');
 const otherItemsPer = document.querySelectorAll('.other-items.percent');
 const otherItemsNum = document.querySelectorAll('.other-items.number');
@@ -16,7 +16,7 @@ const totalCountOther = document.getElementsByClassName('total-input')[2];
 const totalFullCount = document.getElementsByClassName('total-input')[3];
 const totalCountRollback = document.getElementsByClassName('total-input')[4];
 
-let screenBlocks = document.querySelectorAll('.screen');
+let screens = document.querySelectorAll('.screen');
 
 //старая часть работы
 const appData = {
@@ -32,48 +32,47 @@ const appData = {
     isNumber: function (num) {
         return !isNaN(parseFloat(num)) && isFinite(num);
     },
-
+    init: function () {
+        appData.addTitle()
+        buttonCalc.addEventListener('click', appData.start)
+        buttonPlus.addEventListener('click', appData.addScreenBlock)
+    },
+    addScreenBlock: function () {
+        const cloneScreen = screens[0].cloneNode(true);
+        screens = document.querySelectorAll('.screen');
+        screens[screens.length - 1].after(cloneScreen)
+    },
+    addTitle: function () {
+        document.title = title.textContent
+    },
     start: function () {
-        appData.asking();
-        appData.addPrices();
-        appData.getRollbackMessage();
-        appData.getFullPrice();
-        appData.getTitle();
-        appData.getServicePercentPrices();
+        appData.addScreens()
+        // appData.asking();
+        // appData.addPrices();
+        // appData.getRollbackMessage();
+        // appData.getFullPrice();
+        // appData.getTitle();
+        // appData.getServicePercentPrices();
 
-        appData.logger();
+        // appData.logger();
+    },
+    addScreens: function () {
+        screens = document.querySelectorAll('.screen');
+        screens.forEach(function (screen, index) {
+            const select = screen.querySelector('select');
+            const input = screen.querySelector('input');
+            const selectName = select.options[select.selectedIndex].textContent;
+
+            appData.screens.push({
+                id: index,
+                name: selectName,
+                price: +select.value * +input.value
+            })
+        })
+
+        console.log(appData.screens);
     },
     asking: function () {
-
-
-
-        do {
-            appData.title = prompt('Как называется Ваш проект?', 'Калькулятор вёрстки');
-        } while (appData.isNumber(appData.title))
-
-
-        for (let i = 0; i < 2; i++) {
-            let price = 0;
-            let name;
-            do {
-                name = prompt('Какие типы экранов нужно разработать?');
-            } while (appData.isNumber(name));
-
-            do {
-                price = prompt('Сколько будет стоить данная работа?');
-                price = price.split(' ').filter(function (str) {
-                    return /\S/.test(str);
-                });
-                price = +price.join('')
-            } while (!appData.isNumber(price))
-
-            appData.screens.push({ id: i, name: name, price: price })
-        }
-
-
-
-        appData.adaptive = confirm('Нужен ли адаптив на сайте?');
-
         for (let i = 0; i < 2; i++) {
             let name;
             let servicePrice = 0;
@@ -153,7 +152,7 @@ const appData = {
 
 //вызов функций
 
-appData.start()
+appData.init()
 
 
 //мусор и логи
