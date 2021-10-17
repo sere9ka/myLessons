@@ -34,12 +34,17 @@ const appData = {
     servicesPercent: {},
     init: function () {
         appData.addTitle()
+        appData.default()
         buttonCalc.addEventListener('click', appData.buttonStopped);
         buttonPlus.addEventListener('click', appData.addScreenBlock);
         inputRange.addEventListener('input', appData.getRollbackValue);
     },
     addTitle: function () {
         document.title = title.textContent
+    },
+    default: function () {
+        inputRange.defaultValue = 10;
+        spanRange.textContent = inputRange.value + '%';
     },
     buttonStopped: function () {
         let select;
@@ -127,7 +132,7 @@ const appData = {
     },
     getRollbackValue: function (event) {
         let valueInputRange = event.target.value;
-        spanRange.textContent = valueInputRange;
+        spanRange.textContent = valueInputRange + '%';
         appData.rollback = valueInputRange;
     },
     logger: function () {
