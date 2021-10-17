@@ -22,6 +22,7 @@ let screens = document.querySelectorAll('.screen');
 const appData = {
     title: '',
     screens: [],
+    count: 0,
     screenPrice: 0,
     adaptive: true,
     rollback: 10,
@@ -34,48 +35,44 @@ const appData = {
     init: function () {
         appData.addTitle()
         buttonCalc.addEventListener('click', appData.buttonStopped);
-        buttonPlus.addEventListener('click', appData.addScreenBlock)
-
-
+        buttonPlus.addEventListener('click', appData.addScreenBlock);
+        inputRange.addEventListener('input', appData.getRollbackValue);
     },
     addTitle: function () {
         document.title = title.textContent
     },
     buttonStopped: function () {
+        let select;
+        let input;
         screens = document.querySelectorAll('.screen');
-        screens.forEach(function (screen, index) {
-            const input = screen.querySelector('input');
-            const select = screen.querySelector('select');
-            if (select.selectedIndex == 0 || input.value == 0 || input.value == null) {
-                console.log('нельзя нажать');
-                appData.init()
-            } else {
-                console.log('можно нажать');
-                appData.start()
-            }
-
+        screens.forEach(function (screen) {
+            input = screen.querySelector('input');
+            select = screen.querySelector('select');
         })
+        if (select.selectedIndex == 0 || input.value == 0 || input.value == null) {
+            appData.init()
+        } else {
+            appData.start()
+        }
     },
-
     start: function () {
         appData.addScreens()
         appData.addServices()
         appData.addPrices();
-        // appData.getRollbackMessage();
-
         // appData.logger();
         appData.showResult()
     },
     showResult: function () {
         total.value = appData.screenPrice;
+        totalCount.value = appData.count;
         totalCountOther.value = appData.servicePricesPercent + appData.servicePricesNumber
         totalFullCount.value = appData.fullPrice
+        totalCountRollback.value = appData.servicePercentPrice
     },
     addScreens: function () {
         screens = document.querySelectorAll('.screen');
         screens.forEach(function (screen, index) {
             const select = screen.querySelector('select');
-            console.dir(select);
             const input = screen.querySelector('input');
             const selectName = select.options[select.selectedIndex].textContent;
             appData.screens.push({
@@ -83,8 +80,10 @@ const appData = {
                 name: selectName,
                 price: +select.value * +input.value
             })
+            appData.count += +input.value
         })
     },
+
     addServices: function () {
         otherItemsPercent.forEach(function (item) {
             const check = item.querySelector('input[type=checkbox]');
@@ -112,33 +111,25 @@ const appData = {
         const cloneScreen = screens[0].cloneNode(true);
         screens[screens.length - 1].after(cloneScreen);
     },
-
     addPrices: function () {
         appData.screenPrice = appData.screens.reduce(function (sum, screen) {
             return sum + screen.price
         }, 0);
-
         for (const key in appData.servicesNumber) {
             appData.servicePricesNumber += appData.servicesNumber[key]
         }
         for (const key in appData.servicesPercent) {
             appData.servicePricesPercent += appData.screenPrice * (appData.servicesPercent[key] / 100)
         }
-
         appData.fullPrice = +appData.screenPrice + +appData.servicePricesNumber + +appData.servicePricesPercent;
-    },
 
-    getRollbackMessage: function () {
-        if (appData.fullPrice >= 30000) {
-            return 'Даём скидку в 10%'
-        } else if (appData.fullPrice < 30000 && appData.fullPrice >= 15000) {
-            return 'Даём скидку в 5%'
-        } else if (appData.fullPrice < 15000 && appData.fullPrice >= 0) {
-            return 'Скидка не предусмотрена'
-        } else
-            return 'Что то пошло не так';
+        appData.servicePercentPrice = Math.ceil(appData.fullPrice - (appData.fullPrice * (appData.rollback / 100)));
     },
-
+    getRollbackValue: function (event) {
+        let valueInputRange = event.target.value;
+        spanRange.textContent = valueInputRange;
+        appData.rollback = valueInputRange;
+    },
     logger: function () {
         console.log(appData.screens);
         for (const key in appData) {
