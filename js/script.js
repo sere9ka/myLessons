@@ -114,6 +114,7 @@ const appData = {
     addScreenBlock: function () {
         screens = document.querySelectorAll('.screen'); //без этого не видит новый предпоследий элемент коллекции
         const cloneScreen = screens[0].cloneNode(true);
+        cloneScreen.querySelector('input').value = 0;
         screens[screens.length - 1].after(cloneScreen);
     },
     addPrices: function () {
@@ -133,7 +134,7 @@ const appData = {
     getRollbackValue: function (event) {
         let valueInputRange = event.target.value;
         spanRange.textContent = valueInputRange + '%';
-        appData.rollback = valueInputRange;
+        appData.rollback = +valueInputRange;
     },
     logger: function () {
         console.log(appData.screens);
