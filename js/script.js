@@ -1,10 +1,3 @@
-// 4) В объекте реализовать метод reset(), срабатывающий по нажатию на кнопку Сброс. Метод reset() должен привести объект к исходному состоянию:
-// Кнопка Сброс должна замениться на кнопку Рассчитать
-// Должны быть убраны все дополнительные элементы (которые добавлялись динамически) и значения полей ввода
-// Все input[type=text] и select должны быть разблокированы
-// Метод reset должен всю программу возвращать в исходное состояние
-// Метод reset() пишем самостоятельно, никаких перезагрузок страницы. Метод должен быть расписан наподобие start().
-
 'use strict';
 
 const title = document.getElementsByTagName('h1')[0];
@@ -47,7 +40,9 @@ const appData = {
         inputRange.addEventListener('input', this.getRollbackValue);
         buttonReset.addEventListener('click', this.reset);
     },
+
     pullScreens: () => screens = document.querySelectorAll('.screen'),
+
     addTitle: function () {
         document.title = title.textContent
     },
@@ -112,13 +107,11 @@ const appData = {
 
         screens.forEach((screen, index) => {
             if (index !== 0) {
-                console.log(screen);
                 screen.remove()
             } else {
                 const select = screen.querySelector('select');
-                select.selectedIndex = 0;
-                console.dir(select);
                 const input = screen.querySelector('input');
+                select.selectedIndex = 0;
                 input.value = '';
             }
         })
@@ -127,7 +120,6 @@ const appData = {
         appData.blockedFunc()
         appData.resetValue()
         appData.init();
-        console.log(screens);
     },
     showResult: function () {
         total.value = this.screenPrice;
