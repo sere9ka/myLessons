@@ -15,6 +15,11 @@ const totalCountOther = document.getElementsByClassName('total-input')[2];
 const totalFullCount = document.getElementsByClassName('total-input')[3];
 const totalCountRollback = document.getElementsByClassName('total-input')[4];
 const checkboxs = document.querySelectorAll('input[type=checkbox]');
+const checkCMS = document.getElementById('cms-open');
+const selectCms = document.getElementById('cms-select');
+const variantsCms = document.querySelector('.hidden-cms-variants');
+const cmsInput = document.getElementById('cms-other-input');
+const cmsBlock = document.querySelector('.hidden-cms-variants > .main-controls__input');
 
 let screens = document.querySelectorAll('.screen');
 
@@ -39,8 +44,27 @@ const appData = {
         buttonPlus.addEventListener('click', this.addScreenBlock);
         inputRange.addEventListener('input', this.getRollbackValue);
         buttonReset.addEventListener('click', this.reset);
+        checkCMS.addEventListener('change', this.cms);
     },
-
+    getSelect: function () {
+        
+        if (selectCms.value == '50') {
+            cmsBlock.style.display = 'block';
+            cmsInput.value = +50;
+            cmsInput.disabled = true;
+        } else if (selectCms.value == 'other') {
+            cmsBlock.style.display = 'block';
+            cmsInput.value = +'';
+            cmsInput.disabled = false;
+        } else {
+            cmsBlock.style.display = 'none';
+        }
+    },
+    cms: function() {
+        
+        variantsCms.style.display = 'flex';
+        selectCms.addEventListener('change', appData.getSelect)
+    },
     pullScreens: () => screens = document.querySelectorAll('.screen'),
 
     addTitle: function () {
@@ -75,6 +99,7 @@ const appData = {
         checkboxs.forEach((checkbox) => checkbox.disabled = !checkbox.disabled);
         buttonCalc.classList.toggle('display--none');
         buttonReset.classList.toggle('display--none');
+        
     },
     start: function () {
         this.addScreens()
@@ -115,6 +140,7 @@ const appData = {
                 input.value = '';
             }
         })
+        variantsCms.style.display = 'none';
     },
     reset: function() {
         appData.blockedFunc()
@@ -183,7 +209,7 @@ const appData = {
         for (const key in this.servicesPercent) {
             this.servicePricesPercent += this.screenPrice * (this.servicesPercent[key] / 100)
         }
-        this.fullPrice = +this.screenPrice + +this.servicePricesNumber + +this.servicePricesPercent;
+        this.fullPrice = (+this.screenPrice + +this.servicePricesNumber + +this.servicePricesPercent) * (cmsInput.value / 100 + 1) ;
 
         this.servicePercentPrice = Math.ceil(this.fullPrice - (this.fullPrice * (this.rollback / 100)));
     },
