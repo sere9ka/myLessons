@@ -135,6 +135,8 @@ const appData = {
         let valueInputRange = event.target.value;
         spanRange.textContent = valueInputRange + '%';
         appData.rollback = +valueInputRange;
+        appData.servicePercentPrice = Math.ceil(appData.fullPrice - (appData.fullPrice * (appData.rollback / 100)));
+        totalCountRollback.value = appData.servicePercentPrice
     },
     logger: function () {
         console.log(appData.screens);
